@@ -1,0 +1,92 @@
+query getAllEvents($cursor: ID) {
+  getEvents(
+    token: $cursor
+    collapsed: false
+    orderBy: DATETIME_DESCENDING
+    filter: {
+      AND: [
+        { datetime: { RELATIVE: LAST_24_HOUR } }
+        { services: { IN: ["OKTA"] } }
+      ]
+    }
+    limit: 500
+    query: "event:\"authenticate\""
+  ) {
+    hasMoreResults
+    cursor
+    results {
+      actors {
+        id
+        name
+        ... on Account {
+          user(idOnly: true) {
+            id
+          }
+          isAdmin
+          email {
+            raw
+          }
+          generalProperties {
+            jobTitle
+          }
+        }
+      }
+      targets {
+        id
+        name
+        ... on Account {
+          user(idOnly: true) {
+            id
+          }
+          isAdmin
+          email {
+            raw
+          }
+        }
+      }
+      browserId
+      datetime
+      deviceId
+      eventFrequency
+      humanReadableDescription {
+        plain
+        tagged
+      }
+      id
+      ipAddress {
+        raw
+        isp
+        asn
+        isMobile
+        hostname
+        vpnProxyDescription
+        vpnProxyType
+      }
+      isPrivilegedEvent
+      location {
+        city
+        country
+        subdivision
+      }
+      obsidianEventName {
+        description
+        type
+      }
+      service {
+        serviceId
+        name
+      }
+      sessionId
+      tenantId
+      tenantObject {
+        name
+        tenantId
+      }
+      subService
+      status
+      userAgent {
+        raw
+      }
+    }
+  }
+}

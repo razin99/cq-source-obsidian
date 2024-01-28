@@ -1,0 +1,65 @@
+query ListGlobalPostureRules($cursor: ID) {
+  listGlobalPostureRules(
+    cursor: $cursor
+    limit: 25
+    order_by: [
+      { column: is_passing, is_desc: false }
+      { column: risk_level, is_desc: true }
+      { column: platform_id, is_desc: false }
+      { column: name, is_desc: false }
+    ]
+  ) {
+    has_more_results
+    cursor
+    rules {
+      rule_id
+      platform_id
+      product_ids
+      security_domain {
+        id
+        name
+      }
+      name
+      risk_level
+      standard_ids
+      control_ids
+      obsidian_rule
+      release_label
+      default_risk_level
+      benchmark_value_type
+      rule_value_type
+      description
+      remediation_instructions
+      exceptions_count {
+        active
+        inactive
+      }
+      tenant_states {
+        tenant_id
+        is_passing
+        violations
+        tenant {
+          tenantId
+          name
+          serviceId
+          isProduction
+          sensitivity {
+            displayName
+            enum
+          }
+          platform
+        }
+        last_scanned
+        risk_accepted
+        exceptions_count {
+          active
+          inactive
+        }
+        correction_score_change
+      }
+      total_violations
+      correction_score_change
+    }
+    total
+  }
+}
