@@ -21,3 +21,7 @@ cq-source-obsidian
 
 dist
 *.log
+
+config.yaml
+output
+.cq
