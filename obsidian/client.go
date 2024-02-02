@@ -10,6 +10,8 @@ import (
 
 type ObsidianClient struct {
 	Token string
+	// Optional: defaults to "cloudquery"
+	UserAgent string
 }
 
 var baseUrl string = "https://api.obsec.io/v1/gql"
@@ -36,6 +38,11 @@ func (o ObsidianClient) NewRequest(ctx context.Context, operation GqlOperation) 
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", o.Token))
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
+	if o.UserAgent == "" {
+		req.Header.Set("User-Agent", "cloudquery")
+	} else {
+		req.Header.Set("User-Agent", o.UserAgent)
+	}
 
 	client := http.Client{}
 	res, err := client.Do(req)
