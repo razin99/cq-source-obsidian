@@ -77,6 +77,7 @@ func (*Client) Close(_ context.Context) error {
 func getTables() schema.Tables {
 	tables := schema.Tables{
 		services.AllEventsTable(),
+		services.GlobalPostureRulesTable(),
 	}
 	if err := transformers.TransformTables(tables); err != nil {
 		panic(err)
