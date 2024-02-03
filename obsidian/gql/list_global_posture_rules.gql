@@ -1,4 +1,4 @@
-query ListGlobalPostureRules($cursor: ID) {
+query listGlobalPostureRules($cursor: ID) {
   listGlobalPostureRules(
     cursor: $cursor
     limit: 25
